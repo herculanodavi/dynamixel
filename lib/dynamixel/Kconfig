@@ -1,0 +1,10 @@
+config DYNAMIXEL
+    bool "Enables the Dynamixel library"
+
+    config DYNAMIXEL_MAX_NUM_SERVOS
+    int "Maximum number of servos to be addressed at once"
+    default 20
+
+    config DYNAMIXEL_MAX_NUM_BYTES
+    int "Maximum number of bytes written/read per servo"
+    default 4
