@@ -1,5 +1,1 @@
-menu "Custom libraries"
-
 rsource "dynamixel/Kconfig"
-
-endmenu
