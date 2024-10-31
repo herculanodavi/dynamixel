@@ -1,2 +1,4 @@
 zephyr_library()
-zephyr_library_sources(parser.c instruction_packet.c serializer_protocol2.c)
+zephyr_library_sources(parser.c instruction_packet.c)
+zephyr_library_sources_ifdef(CONFIG_DYNAMIXEL_PROTOCOL_2 serializer_protocol2.c)
+zephyr_library_sources_ifdef(CONFIG_DYNAMIXEL_PROTOCOL_1 serializer_protocol1.c)

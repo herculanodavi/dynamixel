@@ -15,4 +15,5 @@ config DYNAMIXEL
                 tristate "DYNAMIXEL Protocol 1.0"
         config DYNAMIXEL_PROTOCOL_2
                 tristate "DYNAMIXEL Protocol 2.0"
+                select CRC
     endchoice
