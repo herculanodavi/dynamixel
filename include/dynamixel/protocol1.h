@@ -1,5 +1,5 @@
-#ifndef DYNAMIXEL_PROTOCOL2_DEFS_H
-#define DYNAMIXEL_PROTOCOL2_DEFS_H
+#ifndef DYNAMIXEL_PROTOCOL1_H
+#define DYNAMIXEL_PROTOCOL1_H
 
 #include <stdint.h>
 
@@ -29,9 +29,9 @@
 #define DXL_STATUS_PACKET_CHKSUM_POS(param_len) (DXL_STATUS_PACKET_PARAM_POS + (param_len))
 
 // Packet lengths (not the value in the frame, but the total length of the frame).
-#define DXL_INST_PACKET_LEN(param_len) (DXL_INST_PACKET_CHKSUM_POS(param_len) + DXL_PACKET_CRC_LEN)
+#define DXL_INST_PACKET_LEN(param_len) (DXL_INST_PACKET_CHKSUM_POS(param_len) + DXL_PACKET_CHKSUM_LEN)
 #define DXL_STATUS_PACKET_LEN(param_len)                                                          \
-	(DXL_STATUS_PACKET_CHKSUM_POS(param_len) + DXL_PACKET_CRC_LEN)
+	(DXL_STATUS_PACKET_CHKSUM_POS(param_len) + DXL_PACKET_CHKSUM_LEN)
 
 typedef enum {
     DXL_INPUT_VOLTAGE_ERROR = 1 << 0,

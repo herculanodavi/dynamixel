@@ -1,5 +1,5 @@
-#ifndef DYNAMIXEL_PROTOCOL2_DEFS_H
-#define DYNAMIXEL_PROTOCOL2_DEFS_H
+#ifndef DYNAMIXEL_PROTOCOL_H
+#define DYNAMIXEL_PROTOCOL_H
 
 #include <stdint.h>
 
@@ -13,6 +13,8 @@
 #ifdef CONFIG_DYNAMIXEL_PROTOCOL_2 
 #define DYNAMIXEL_PROTOCOL_VERSION DXL_PROTOCOL_VERSION_2
 #include "dynamixel/protocol2.h"
+#else
+#error "No dynamixel protocol version, select one in Kconfig"
 #endif
 #endif
 

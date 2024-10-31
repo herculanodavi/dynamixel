@@ -1,5 +1,5 @@
-#ifndef DYNAMIXEL_DYNAMIXEL_H
-#define DYNAMIXEL_DYNAMIXEL_H
+#ifndef DYNAMIXEL_SERIALIZER_H
+#define DYNAMIXEL_SERIALIZER_H
 
 #include <stddef.h>
 #include <stdint.h>
