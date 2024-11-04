@@ -14,6 +14,8 @@ int main() {
     uint8_t ids[] = {0x01, 0x02};
     uint16_t values[] = {0x00FF, 0x00AA};
 
+    // example diff
+
     dxl_inst_packet_t inst_packet;
     dxl_err_t status = dxl_make_sync_write_i16(&inst_packet, 0x20, ids, 2, values);
     __ASSERT(status == DXL_OK, "Error composing sync write packet");
