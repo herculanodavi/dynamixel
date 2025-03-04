@@ -22,7 +22,7 @@ static uint16_t read_little_endian_u16(const uint8_t *source)
 }
 
 int dxl_serialize_instruction_packet(const dxl_inst_packet_t *packet, uint8_t *buffer,
-				      size_t length)
+				     size_t length)
 {
 	if (packet == NULL || buffer == NULL) {
 		return DXL_PTR_ERROR;
@@ -64,7 +64,7 @@ int dxl_serialize_instruction_packet(const dxl_inst_packet_t *packet, uint8_t *b
 }
 
 dxl_err_t dxl_deserialize_status_packet(dxl_status_packet_t *packet, const uint8_t *buffer,
-					 size_t length)
+					size_t length)
 {
 	if (packet == NULL) {
 		return DXL_PTR_ERROR;
