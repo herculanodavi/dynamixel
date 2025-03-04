@@ -12,7 +12,9 @@ typedef void(*dxl_parser_match_callback)(dxl_parser_handle, uint8_t*, size_t, vo
 
 dxl_parser_handle dxl_parser_create();
 
-dxl_parser_handle dxl_parser_create_static(uint8_t* block, size_t size);
+dxl_parser_handle dxl_parser_create_static(void* block, size_t size);
+
+size_t dxl_get_handle_size();
 
 dxl_err_t dxl_parser_set_match_callback(dxl_parser_handle parser, dxl_parser_match_callback callback);
 
