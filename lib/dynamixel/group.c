@@ -7,6 +7,8 @@ static dxl_err_t dxl_split_sync_write(const dxl_inst_packet_t *source, const dxl
 static dxl_err_t dxl_split_fast_sync_read(const dxl_inst_packet_t *source,
 					  const dxl_id_group_t *groups, size_t num_groups,
 					  dxl_inst_packet_t *packets);
+static dxl_err_t dxl_split_sync_read(const dxl_inst_packet_t *source, const dxl_id_group_t *groups,
+				     size_t num_groups, dxl_inst_packet_t *packets);
 
 dxl_err_t dxl_split_packet(const dxl_inst_packet_t *source, const dxl_id_group_t *groups,
 			   size_t num_groups, dxl_inst_packet_t *packets)
@@ -20,6 +22,8 @@ dxl_err_t dxl_split_packet(const dxl_inst_packet_t *source, const dxl_id_group_t
 		return dxl_split_sync_write(source, groups, num_groups, packets);
 	case DXL_INST_FAST_SYNC_READ:
 		return dxl_split_fast_sync_read(source, groups, num_groups, packets);
+	case DXL_INST_SYNC_READ:
+		return dxl_split_sync_read(source, groups, num_groups, packets);
 	default:
 		return DXL_NOT_IMPLEMENTED;
 	}
@@ -70,12 +74,12 @@ static dxl_err_t dxl_split_sync_write(const dxl_inst_packet_t *source, const dxl
 	// Distance in bytes between ids
 	const size_t id_spacing = write_length + 1;
 
-	// Copy until first id offset
-	memcpy(source->params, packet->params, first_id_pos);
-
 	for (size_t i = 0; i < num_groups; i++) {
 		const dxl_id_group_t *group = &(groups[i]);
 		dxl_inst_packet_t *packet = &(packets[i]);
+
+		// Copy until first id offset
+		memcpy(source->params, packet->params, first_id_pos);
 
 		packet->id = source->id;
 		packet->instruction = source->instruction;
@@ -94,12 +98,35 @@ static dxl_err_t dxl_split_fast_sync_read(const dxl_inst_packet_t *source,
 	// Distance in bytes between ids
 	const size_t id_spacing = 1;
 
-	// Copy until first id offset
-	memcpy(source->params, packet->params, first_id_pos);
+	for (size_t i = 0; i < num_groups; i++) {
+		const dxl_id_group_t *group = &(groups[i]);
+		dxl_inst_packet_t *packet = &(packets[i]);
+
+		// Copy until first id offset
+		memcpy(source->params, packet->params, first_id_pos);
+
+		packet->id = source->id;
+		packet->instruction = source->instruction;
+		packet->protocol_version = source->protocol_version;
+		search_id_and_copy(group, source->params, source->params_length, first_id_pos,
+				   id_spacing, packet);
+	}
+}
+
+static dxl_err_t dxl_split_sync_read(const dxl_inst_packet_t *source, const dxl_id_group_t *groups,
+				     size_t num_groups, dxl_inst_packet_t *packets)
+{
+	// Position of the first byte that is an ID
+	const size_t first_id_pos = 4;
+	// Distance in bytes between ids
+	const size_t id_spacing = 1;
 
 	for (size_t i = 0; i < num_groups; i++) {
 		const dxl_id_group_t *group = &(groups[i]);
 		dxl_inst_packet_t *packet = &(packets[i]);
+
+		// Copy until first id offset
+		memcpy(source->params, packet->params, first_id_pos);
 
 		packet->id = source->id;
 		packet->instruction = source->instruction;
