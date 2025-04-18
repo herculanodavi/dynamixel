@@ -21,7 +21,10 @@ int main() {
     
     int num_bytes = dxl_serialize_instruction_packet(&inst_packet, buffer, buffer_length);
     __ASSERT(num_bytes > 0, "Error serializing example packet");
-    printk("%d bytes written\n", num_bytes);
+    for(int i = 0; i < num_bytes; i++){
+        printk("%02x ", buffer[i]);
+    }
+    printk("\n%d bytes written\n", num_bytes);
 
     return 0;
 }
