@@ -35,3 +35,42 @@ dxl_err_t dxl_make_sync_write_i16(dxl_inst_packet_t *packet, uint16_t address, u
 
 	return DXL_OK;
 }
+
+dxl_err_t dxl_make_ping(dxl_inst_packet_t *packet, dxl_id_t id)
+{
+	if (id == 0xFF) { // The maximum ID should be FE, which is the broadcast 
+		return DXL_ERROR;
+	}
+	packet->params_length = 0; // there is no payload
+	packet->id = id;
+	packet->instruction = DXL_INST_PING;
+    packet->protocol_version = DYNAMIXEL_PROTOCOL_VERSION;
+
+	return DXL_OK;
+}
+
+dxl_err_t dxl_make_write(dxl_inst_packet_t *packet,	uint16_t address, dxl_id_t id, int8_t *params,	uint16_t num_params)
+{
+	if (params == NULL) {
+		return DXL_PTR_ERROR;
+	}
+	// Fill parameters with data
+	uint16_t needed_params_len = num_params // number of parameters
+						+ 2; // address 
+	if (DXL_MAX_NUM_PARAMS < needed_params_len) {
+		// Provided buffer is too small
+		return DXL_ERROR;
+	}
+	packet->params[0] = address&0xFF;
+	packet->params[1] = (address >> 8)&0xFF;
+
+	for (size_t i = 0; i < num_params; i++) 
+		packet->params[i+2] = params[i];
+
+	packet->params_length = needed_params_len;
+	packet->id = id;
+	packet->instruction = DXL_INST_WRITE;
+    packet->protocol_version = DYNAMIXEL_PROTOCOL_VERSION;
+
+	return DXL_OK;
+}
