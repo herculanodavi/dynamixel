@@ -50,6 +50,7 @@ typedef struct dxl_inst_packet {
 	uint8_t params[DXL_MAX_NUM_PARAMS];
 	dxl_length_t params_length;
 	dxl_protocol_version_t protocol_version;
+	int num_status_packet;
 } dxl_inst_packet_t;
 
 typedef struct dxl_status_packet {

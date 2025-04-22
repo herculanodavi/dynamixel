@@ -1,0 +1,17 @@
+/ {
+    uart3: uart3 {
+        status = "okay";
+        compatible = "zephyr,native-tty-uart";
+        serial-port = "/tmp/ttyUSB0";
+        current-speed = <1000000>;
+    };
+
+    dxl0: dxl0 {
+        compatible = "dynamixel-bus";
+        uart = <&uart3>;
+        direction-gpios = <&gpio0 5 1>;
+        motor-ids = <1 2 3>;
+        timeout-timer = <&counter0>;
+        timeout-timer-channel = <0>;
+    }; 
+};
