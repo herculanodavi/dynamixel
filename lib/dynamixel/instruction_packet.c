@@ -1,6 +1,7 @@
 #include "dynamixel/instruction_packet.h"
 
 #include <stddef.h>
+#include <string.h>
 
 #include "dynamixel/protocol.h"
 
@@ -26,6 +27,7 @@ dxl_err_t dxl_make_sync_write_i16(dxl_inst_packet_t *packet, uint16_t address, c
 	packet->id = DXL_ID_BROADCAST;
 	packet->instruction = DXL_INST_SYNC_WRITE;
 	packet->protocol_version = DYNAMIXEL_PROTOCOL_VERSION;
+	packet->num_status_packet = 0;
 
 	return DXL_OK;
 }
@@ -48,6 +50,7 @@ dxl_err_t dxl_make_sync_read_i16(dxl_inst_packet_t *packet, uint16_t address, co
 	packet->id = DXL_ID_BROADCAST;
 	packet->instruction = DXL_INST_SYNC_READ;
 	packet->protocol_version = DYNAMIXEL_PROTOCOL_VERSION;
+	packet->num_status_packet = num_ids;
 
 	return DXL_OK;
 }
